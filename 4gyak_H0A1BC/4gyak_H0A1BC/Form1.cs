@@ -105,8 +105,25 @@ namespace _4gyak_H0A1BC
              GetCell(2, 1),
              GetCell(1 + values.GetLength(0), values.GetLength(1))).Value2 = values;
 
-            
-            
+
+            Excel.Range headerRange = xlSheet.get_Range(GetCell(1, 1), GetCell(1, headers.Length));
+            headerRange.Font.Bold = true;
+            headerRange.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
+            headerRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+            headerRange.EntireColumn.AutoFit();
+            headerRange.RowHeight = 40;
+            headerRange.Interior.Color = Color.LightBlue;
+            headerRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
+
+            Excel.Range tableRange = xlSheet.get_Range(GetCell(2, 9), GetCell(Flats.Count+1,1));
+            tableRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
+
+            Excel.Range oszlop1Range = xlSheet.get_Range(GetCell(1, 1), GetCell(Flats.Count+1,1));
+            oszlop1Range.Font.Bold = true;
+            oszlop1Range.Interior.Color = Color.LightYellow;
+
+            Excel.Range oszlop9Range = xlSheet.get_Range(GetCell(1, 9), GetCell(Flats.Count + 1,9));
+            oszlop9Range.Interior.Color = Color.LightGreen;
 
         }
 
