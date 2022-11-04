@@ -15,6 +15,7 @@ namespace H0A1BC_6gyak
     public partial class Form1 : Form
     {
         private List<Toy> _toys = new List<Toy>();
+        private Toy _nextToy;
 
         private IToyFactory _factory;
 
@@ -56,6 +57,26 @@ namespace H0A1BC_6gyak
                 panel1.Controls.Remove(oldestToy);
                 _toys.Remove(oldestToy);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Factory = new CarFactory();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Factory = new BallFactory();
+        }
+
+        private void DisplayNext()
+        {
+            if (_nextToy != null)
+                Controls.Remove(_nextToy);
+            _nextToy = Factory.CreateNew();
+            _nextToy.Top = lblNext.Top + lblNext.Height + 20;
+            _nextToy.Left = lblNext.Left;
+            Controls.Add(_nextToy);
         }
     }
 }
