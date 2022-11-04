@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace H0A1BC_6gyak.Abstrations
 {
-    interface IToyFactory
+    public interface IToyFactory
     {
         Toy CreateNew();
     }

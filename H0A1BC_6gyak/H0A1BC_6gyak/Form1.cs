@@ -1,4 +1,5 @@
-﻿using H0A1BC_6gyak.Entities;
+﻿using H0A1BC_6gyak.Abstrations;
+using H0A1BC_6gyak.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,11 +14,11 @@ namespace H0A1BC_6gyak
 {
     public partial class Form1 : Form
     {
-        private List<Ball> _balls = new List<Ball>();
+        private List<Toy> _toys = new List<Toy>();
 
-        private BallFactory _factory;
+        private IToyFactory _factory;
 
-        public BallFactory Factory
+        public IToyFactory Factory
         {
             get { return _factory; }
             set { _factory = value; }
@@ -33,27 +34,27 @@ namespace H0A1BC_6gyak
 
         private void createTimer_Tick(object sender, EventArgs e)
         {
-            var ball = Factory.CreateNew();
-            _balls.Add(ball);
-            ball.Left = -ball.Width;
-            panel1.Controls.Add(ball);
+            var toy = Factory.CreateNew();
+            _toys.Add(toy);
+            toy.Left = -toy.Width;
+            panel1.Controls.Add(toy);
         }
 
         private void conveyorTimer_Tick(object sender, EventArgs e)
         {
             var legjobbra = 0;
-            foreach (var ball in _balls)
+            foreach (var toy in _toys)
             {
-                ball.MoveBall();
-                if (ball.Left > legjobbra)
-                    legjobbra = ball.Left;
+                toy.MoveToy();
+                if (toy.Left > legjobbra)
+                    legjobbra = toy.Left;
             }
 
             if (legjobbra > 1000)
             {
-                var oldestBall = _balls[0];
-                panel1.Controls.Remove(oldestBall);
-                _balls.Remove(oldestBall);
+                var oldestToy = _toys[0];
+                panel1.Controls.Remove(oldestToy);
+                _toys.Remove(oldestToy);
             }
         }
     }
