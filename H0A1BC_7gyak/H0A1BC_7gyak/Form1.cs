@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ namespace H0A1BC_7gyak
         List<Tick> Ticks;
         List<PortfolioItem> Portfolio = new List<PortfolioItem>();
 
+        List<decimal> Nyereségek = new List<decimal>();
+
 
         public Form1()
         {
@@ -25,7 +28,7 @@ namespace H0A1BC_7gyak
             dataGridView1.DataSource = Ticks;
             CreatePortfolio();
 
-            List<decimal> Nyereségek = new List<decimal>();
+            
             int intervalum = 30;
             DateTime kezdőDátum = (from x in Ticks select x.TradingDay).Min();
             DateTime záróDátum = new DateTime(2016, 12, 30);
@@ -68,6 +71,29 @@ namespace H0A1BC_7gyak
                 value += (decimal)last.Price * item.Volume;
             }
             return value;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.InitialDirectory = Application.StartupPath;
+            sfd.Filter = "Veszzővel tagolt szöveg (*.csv) | *.csv";
+            sfd.DefaultExt = "csv";
+            sfd.AddExtension = true;
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                StreamWriter sw = new StreamWriter(sfd.FileName, false, Encoding.UTF8);
+                sw.WriteLine("Időszak;Nyereség");
+                int szamlalo = 1;
+                foreach (var elem in Nyereségek)
+                {
+                    sw.WriteLine($"{szamlalo};{elem}");
+                    szamlalo++;
+                }
+                sw.Close();
+
+            }
+            
         }
     }
 }
